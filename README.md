@@ -3,7 +3,9 @@
 A Phlex-based pipeline that takes muon hits produced by the UBT Geant4
 simulation (`run_ubt_alltile`) and produces per-hit reconstructed
 timestamps in the SHiP-experiment "spill→coarse→fine" format
-(12+32+12 bit packing with per-region Gaussian smearing).
+(12+32+12 bit packing with per-region Gaussian smearing). 
+The pipeline runs with a conversion of CUDA muons (ask Matei for files
+or simulation) or look at [https://github.com/matclim/UBTR-D](https://github.com/matclim/UBTR-D)
 
 The pipeline is **chunked** — a single physical 1.2 s spill is split
 into ~155 chunks of one million muons each, processed in parallel by
