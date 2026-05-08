@@ -38,7 +38,19 @@
       treename: 'Events',
       events_per_chunk: 1000000,
       spread_mode: 'by_count',
-      rate_hz: 3.33333333e11,           // 4e11 muons / 1.2 s
+      // rate_hz is the rate at which muons arrive during a 1.2 s spill,
+      // in the same normalization as primary_weight from the raw upstream
+      // files. One full spill corresponds to sum(primary_weight) = 2.19865e9
+      // muons (NOT to the ~10^11 PoT count -- the upstream files are already
+      // a filtered sub-sample with renormalized weights).
+      //
+      //   rate_hz = 2.19865e9 / 1.2 = 1.83221e9 Hz
+      //
+      // The 154 M entries in muon_hits.root represent ~7% of one spill,
+      // so the global muon window comes out to ~84 ms (well below the
+      // 1.2 s cap; no clamping). Each chunk's time slice is ~545 us wide.
+      // Re-derive rate_hz if the upstream sample changes.
+      rate_hz: 1.83221e9,
       window_seconds: 1.2,
       window_jitter_seconds: 0.0,
       base_seed: 12345,
